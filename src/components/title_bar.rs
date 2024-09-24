@@ -70,16 +70,14 @@ fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
         consume_context::<Signal<MobileBurgerMenuShown>>();
     let TitleEntry { name, section } = *entry.read();
     rsx! {
-        ul { class: "mt-8 flex flex-col",
-            li { class: "py-2",
-                a {
-                    class: "pt-0.5 font-header font-semibold uppercase text-white",
-                    onclick: move |_event| {
-                        *active_section.write() = section;
-                        *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::False;
-                    },
-                    "{name}"
-                }
+        li { class: "py-2",
+            a {
+                class: "pt-0.5 font-header font-semibold uppercase text-white",
+                onclick: move |_event| {
+                    *active_section.write() = section;
+                    *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::False;
+                },
+                "{name}"
             }
         }
     }

@@ -1,25 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>personal-webpage</title>
-  <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="UTF-8" />
-  <link rel="stylesheet" href="./css/tailwind.css">
-<link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css">
+	<title>personal-webpage</title>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta charset="UTF-8" />
+	<meta name="description"
+		content="The personal website of Pol Marcet Sardà, a C++ engineer that likes to mess arround with tech">
+	<link rel="preload" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css" as="style"
+		onload="this.onload=null;this.rel='stylesheet'">
+	<noscript>
+		<link rel="stylesheet" href="https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css">
+	</noscript>
+	<link rel="stylesheet" href="./css/tailwind.css">
 <link rel="stylesheet" href="/css2dd2c1a968ce8a667.css">
 
 </head>
+
 <body>
-  <div id="main"></div>
-  <script type="module">
+	<div id="main">
+	</div>
+	
+<script type="module">
     import init from "/Destroyerrrocket.github.io/assets/dioxus/personal-webpage.js";
     init("/Destroyerrrocket.github.io/assets/dioxus/personal-webpage_bg.wasm").then(wasm => {
       if (wasm.__wbindgen_start == undefined) {
         wasm.main();
       }
     });
-  </script>
-  
-</body>
+    </script>
+    </body>
+
 </html>
