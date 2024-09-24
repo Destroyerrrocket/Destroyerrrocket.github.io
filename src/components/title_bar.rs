@@ -66,6 +66,8 @@ fn ShowMobileBurgerMenu() -> Element {
 fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
     let mut active_section: Signal<sections::ActiveSection> =
         consume_context::<Signal<sections::ActiveSection>>();
+    let mut mobile_burger_menu_shown: Signal<MobileBurgerMenuShown> =
+        consume_context::<Signal<MobileBurgerMenuShown>>();
     let TitleEntry { name, section } = *entry.read();
     rsx! {
         ul { class: "mt-8 flex flex-col",
@@ -74,6 +76,7 @@ fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
                     class: "pt-0.5 font-header font-semibold uppercase text-white",
                     onclick: move |_event| {
                         *active_section.write() = section;
+                        *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::False;
                     },
                     "{name}"
                 }
