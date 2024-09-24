@@ -104,13 +104,13 @@ fn MobileBurgerMenu(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
                         alt: "",
                         class: "h-10 w-auto"
                     }
-                    ul { class: "mt-8 flex flex-col",
-                        {
-                        entries.read().iter().map(|entry| {
-                            let entryClone = entry.clone();
-                            rsx! {MobileBurgerButton { entry: entryClone }}
-                        })
-                        }
+                }
+                ul { class: "mt-8 flex flex-col",
+                    {
+                    entries.read().iter().map(|entry| {
+                        let entryClone = entry.clone();
+                        rsx! {MobileBurgerButton { entry: entryClone }}
+                    })
                     }
                 }
             }
