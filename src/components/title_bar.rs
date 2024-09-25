@@ -1,5 +1,4 @@
 use dioxus::prelude::*;
-use dioxus_logger::tracing::*;
 
 use crate::sections;
 
@@ -40,7 +39,6 @@ fn ShowMobileBurgerMenu() -> Element {
                 aria_label: "Website menu",
                 class: "hamburger absolute mt-4 mr-4 hamburger--spin {classes}",
                 onclick: move |_event| {
-                    error!("HELLO");
                     let MobileBurgerMenuShown(is_shown) = mobile_burger_menu_shown();
                     *mobile_burger_menu_shown.write() = MobileBurgerMenuShown(!is_shown);
                 },
