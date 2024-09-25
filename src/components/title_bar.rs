@@ -37,6 +37,7 @@ fn ShowMobileBurgerMenu() -> Element {
     rsx! {
         div { class: "z-71 top-2 right-20 fixed lg:hidden",
             button {
+                aria_label: "Website menu",
                 class: "hamburger absolute mt-4 mr-4 hamburger--spin {classes}",
                 onclick: move |_event| {
                     error!("HELLO");
