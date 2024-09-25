@@ -1,4 +1,5 @@
 use dioxus::prelude::*;
+use dioxus_logger::tracing::*;
 
 use crate::sections;
 
@@ -10,7 +11,7 @@ pub struct TitleEntry {
 
 #[component]
 pub fn TitleBar(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
-    use_context_provider(|| Signal::new(MobileBurgerMenuShown::False));
+    use_context_provider(|| Signal::new(MobileBurgerMenuShown(false)));
 
     rsx! {
         // Desktop top bar
@@ -21,26 +22,8 @@ pub fn TitleBar(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
     }
 }
 
-#[component]
-fn buttonBar() -> Element {
-    let mut active_section: Signal<sections::ActiveSection> =
-        consume_context::<Signal<sections::ActiveSection>>();
-
-    rsx! {
-        button {
-            onclick: move |_event| {
-                *active_section.write() = sections::ActiveSection::AboutMe;
-            },
-            "About Me"
-        }
-    }
-}
-
 #[derive(Clone, Debug)]
-enum MobileBurgerMenuShown {
-    True,
-    False,
-}
+struct MobileBurgerMenuShown(bool);
 
 #[component]
 fn ShowMobileBurgerMenu() -> Element {
@@ -48,15 +31,21 @@ fn ShowMobileBurgerMenu() -> Element {
         consume_context::<Signal<MobileBurgerMenuShown>>();
 
     let classes = match mobile_burger_menu_shown() {
-        MobileBurgerMenuShown::False => "",
-        MobileBurgerMenuShown::True => "invisible",
+        MobileBurgerMenuShown(false) => "",
+        MobileBurgerMenuShown(true) => "is-active",
     };
     rsx! {
-        div { class: "w-full min-h-screen fixed lg:hidden",
+        div { class: "z-71 top-2 right-20 fixed lg:hidden",
             button {
-                class: "{classes} absolute top-0 right-4 mt-4 mr-4",
-                onclick: move |_event| { *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::True },
-                i { class: "bx bx-menu text-4xl text-white" }
+                class: "hamburger absolute mt-4 mr-4 hamburger--spin {classes}",
+                onclick: move |_event| {
+                    error!("HELLO");
+                    let MobileBurgerMenuShown(is_shown) = mobile_burger_menu_shown();
+                    *mobile_burger_menu_shown.write() = MobileBurgerMenuShown(!is_shown);
+                },
+                span { class: "hamburger-box",
+                    span { class: "bg-white-text hamburger-inner" }
+                }
             }
         }
     }
@@ -72,10 +61,10 @@ fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
     rsx! {
         li { class: "py-2",
             a {
-                class: "pt-0.5 font-header font-semibold uppercase text-white",
+                class: "pt-0.5 font-header font-semibold uppercase text-white-text",
                 onclick: move |_event| {
                     *active_section.write() = section;
-                    *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::False;
+                    *mobile_burger_menu_shown.write() = MobileBurgerMenuShown(false);
                 },
                 "{name}"
             }
@@ -85,27 +74,17 @@ fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
 
 #[component]
 fn MobileBurgerMenu(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
-    let mut mobile_burger_menu_shown: Signal<MobileBurgerMenuShown> =
+    let mobile_burger_menu_shown: Signal<MobileBurgerMenuShown> =
         consume_context::<Signal<MobileBurgerMenuShown>>();
 
     let classes = match mobile_burger_menu_shown() {
-        MobileBurgerMenuShown::False => "pointer-events-none opacity-0",
-        MobileBurgerMenuShown::True => "pointer-events-auto opacity-100",
+        MobileBurgerMenuShown(false) => "pointer-events-none opacity-0",
+        MobileBurgerMenuShown(true) => "pointer-events-auto opacity-100",
     };
 
     rsx! {
         div { class: "{classes} fixed inset-0 z-70 min-h-screen bg-black bg-opacity-70 transition-opacity lg:hidden",
             div { class: "absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3",
-                button {
-                    class: "absolute top-0 right-0 mt-4 mr-4",
-                    onclick: move |_event| { *mobile_burger_menu_shown.write() = MobileBurgerMenuShown::False },
-
-                    img {
-                        src: "img/icon-close.svg",
-                        alt: "",
-                        class: "h-10 w-auto"
-                    }
-                }
                 ul { class: "mt-8 flex flex-col",
                     {
                     entries.read().iter().map(|entry| {
@@ -121,19 +100,27 @@ fn MobileBurgerMenu(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
 
 #[component]
 fn DesktopTitleButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
+    let TitleEntry { name, section } = *entry.read();
+
     let mut active_section: Signal<sections::ActiveSection> =
         consume_context::<Signal<sections::ActiveSection>>();
-    let TitleEntry { name, section } = *entry.read();
+
+    let selected_section_classes = if active_section() == section {
+        "bg-white-text"
+    } else {
+        ""
+    };
+
     rsx! {
         li { class: "group pl-6",
             a {
-                class: "cursor-pointer pt-0.5 font-header font-semibold uppercase text-white",
+                class: "cursor-pointer pt-0.5 font-header font-semibold uppercase text-white-text",
                 onclick: move |_event| {
                     *active_section.write() = section;
                 },
                 "{name}"
             }
-            span { class: "block h-0.5 w-full bg-transparent transition-colors group-hover:bg-white" }
+            span { class: "{selected_section_classes} block h-0.5 w-full bg-transparent transition-colors group-hover:bg-white-text" }
         }
     }
 }
@@ -141,8 +128,8 @@ fn DesktopTitleButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
 #[component]
 fn DesktopTitleBar(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
     rsx! {
-        div { class: "bg-slate-800 fixed w-full flex items-center justify-between",
-            div { class: "hidden lg:block",
+        div { class: "z-70 bg-primary fixed w-full flex items-center justify-between",
+            div { class: "hidden mt-1 mb-1 lg:block",
                 ul { class: "flex items-center",
                     {
                         entries.read().iter().map(|entry| {

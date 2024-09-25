@@ -35,7 +35,7 @@ index_on_404 = false
 
 # CSS style file
 
-style = ["./css/tailwind.css"]
+style = ["./css/tailwind.css", "./css/hamburgers-min.css"]
 
 # Javascript code file
 script = []
