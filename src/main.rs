@@ -4,10 +4,21 @@ use dioxus_logger::tracing::{info, Level};
 mod components;
 mod sections;
 
-fn main() {
-    // Init logger
+#[cfg(debug_assertions)]
+fn config_logger() {
     dioxus_logger::init(Level::TRACE).expect("failed to init logger");
     info!("starting app");
+}
+
+#[cfg(not(debug_assertions))]
+fn config_logger() {
+    dioxus_logger::init(Level::WARN).expect("failed to init logger");
+    info!("starting app");
+}
+
+fn main() {
+    // Init logger
+    config_logger();
     launch(App);
 }
 
