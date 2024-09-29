@@ -1,11 +1,27 @@
 use dioxus::prelude::*;
 
 use crate::sections;
+use crate::Route;
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Props, PartialEq, Debug)]
 pub struct TitleEntry {
     pub name: &'static str,
     pub section: sections::ActiveSection,
+    pub active: bool,
+}
+
+impl TitleEntry {
+    pub fn new(
+        name: &'static str,
+        section: sections::ActiveSection,
+        active: sections::ActiveSection,
+    ) -> Self {
+        Self {
+            name,
+            section,
+            active: section == active,
+        }
+    }
 }
 
 #[component]
@@ -52,17 +68,24 @@ fn ShowMobileBurgerMenu() -> Element {
 
 #[component]
 fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
-    let mut active_section: Signal<sections::ActiveSection> =
-        consume_context::<Signal<sections::ActiveSection>>();
     let mut mobile_burger_menu_shown: Signal<MobileBurgerMenuShown> =
         consume_context::<Signal<MobileBurgerMenuShown>>();
-    let TitleEntry { name, section } = *entry.read();
+
+    let TitleEntry { name, section, .. } = *entry.read();
+
+    let output_url: String = section.into();
+
     rsx! {
         li { class: "py-2",
             a {
                 class: "pt-0.5 font-header font-semibold uppercase text-white-text",
+                href: output_url,
+                prevent_default: "onclick",
                 onclick: move |_event| {
-                    *active_section.write() = section;
+                    let nav = navigator();
+                    nav.push(Route::NavBar {
+                        route: section.into(),
+                    });
                     *mobile_burger_menu_shown.write() = MobileBurgerMenuShown(false);
                 },
                 "{name}"
@@ -99,23 +122,27 @@ fn MobileBurgerMenu(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
 
 #[component]
 fn DesktopTitleButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
-    let TitleEntry { name, section } = *entry.read();
+    let TitleEntry {
+        name,
+        section,
+        active,
+    } = *entry.read();
 
-    let mut active_section: Signal<sections::ActiveSection> =
-        consume_context::<Signal<sections::ActiveSection>>();
+    let selected_section_classes = if active { "bg-white-text" } else { "" };
 
-    let selected_section_classes = if active_section() == section {
-        "bg-white-text"
-    } else {
-        ""
-    };
+    let output_url: String = section.into();
 
     rsx! {
         li { class: "group pl-6",
             a {
                 class: "cursor-pointer pt-0.5 font-header font-semibold uppercase text-white-text",
+                href: output_url,
+                prevent_default: "onclick",
                 onclick: move |_event| {
-                    *active_section.write() = section;
+                    let nav = navigator();
+                    nav.push(Route::NavBar {
+                        route: section.into(),
+                    });
                 },
                 "{name}"
             }

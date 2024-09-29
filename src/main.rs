@@ -6,7 +6,7 @@ mod sections;
 
 #[cfg(debug_assertions)]
 fn config_logger() {
-    dioxus_logger::init(Level::TRACE).expect("failed to init logger");
+    dioxus_logger::init(Level::DEBUG).expect("failed to init logger");
     info!("starting app");
 }
 
@@ -23,10 +23,8 @@ fn main() {
 }
 
 #[component]
-fn MainSectionDisplayed() -> Element {
-    let active_section: Signal<sections::ActiveSection> =
-        consume_context::<Signal<sections::ActiveSection>>();
-    match active_section() {
+fn MainSectionDisplayed(route: Vec<String>, current_section: sections::ActiveSection) -> Element {
+    match current_section {
         sections::ActiveSection::AboutMe => rsx! {
             sections::about_me::AboutMe {}
         },
@@ -36,22 +34,42 @@ fn MainSectionDisplayed() -> Element {
     }
 }
 
+#[derive(Routable, Clone)]
+#[rustfmt::skip]
+pub enum Route {
+    #[route("/:..route")]
+    NavBar {route: Vec<String>},
+}
+
 #[component]
-fn App() -> Element {
-    use_context_provider(|| Signal::new(sections::ActiveSection::HelloWorld));
+pub fn App() -> Element {
+    rsx! {
+        Router::<Route> {}
+    }
+}
+
+#[component]
+fn NavBar(route: Vec<String>) -> Element {
+    let current_section = sections::ActiveSection::try_from(route.as_slice())
+        .unwrap_or(sections::ActiveSection::AboutMe);
+
+    info!("current_section: {:?} [{:?}]", current_section, route);
 
     let titleBarEntries = vec![
-        components::title_bar::TitleEntry {
-            name: "About Me",
-            section: sections::ActiveSection::AboutMe,
-        },
-        components::title_bar::TitleEntry {
-            name: "Hello World",
-            section: sections::ActiveSection::HelloWorld,
-        },
+        components::title_bar::TitleEntry::new(
+            "About Me",
+            sections::ActiveSection::AboutMe,
+            current_section,
+        ),
+        components::title_bar::TitleEntry::new(
+            "Hello World",
+            sections::ActiveSection::HelloWorld,
+            current_section,
+        ),
     ];
+
     rsx! {
         components::title_bar::TitleBar { entries: titleBarEntries }
-        MainSectionDisplayed {}
+        MainSectionDisplayed { route, current_section }
     }
 }

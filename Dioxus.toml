@@ -17,7 +17,7 @@ asset_dir = "assets"
 [web.app]
 
 # HTML title tag content
-title = "personal-webpage"
+title = "Pol's website"
 
 #base_path = "Destroyerrrocket.github.io"
 [web.watcher]
@@ -28,14 +28,14 @@ reload_html = true
 # which files or dirs will be watcher monitoring
 watch_path = ["src", "assets"]
 
-index_on_404 = false
+index_on_404 = true
 
 # include `assets` in web platform
 [web.resource]
 
 # CSS style file
 
-style = ["./css/tailwind.css", "./css/hamburgers-min.css"]
+style = ["/css/tailwind.css", "/css/hamburgers-min.css"]
 
 # Javascript code file
 script = []
