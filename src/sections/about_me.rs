@@ -8,11 +8,8 @@ pub fn AboutMe() -> Element {
     trace!("Creating about me");
 
     pub const ME_IMG: manganis::ImageAsset = manganis::mg!(image("./raw_assets/img/me.jpeg")
-        // Manganis uses the builder pattern inside the macro. You can set the image size in pixels at compile time to send the smallest possible image to the client
-        .size(512, 512)
-        // You can also convert the image to a web friendly format at compile time. This can make your images significantly smaller
+        .size(192, 192)
         .format(ImageType::Avif)
-        // You can even tell manganis to preload the image so it's ready to be displayed as soon as it's needed
         .preload());
 
     let skills = vec![
