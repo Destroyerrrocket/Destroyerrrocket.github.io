@@ -52,15 +52,15 @@ pub fn AboutMe() -> Element {
                     h2 { class: "font-header text-4xl font-semibold uppercase text-primary sm:text-5xl lg:text-6xl",
                         "Who am I?"
                     }
-                    h4 { class: "pt-6 font-header text-xl font-medium text-black sm:text-2xl lg:text-3xl",
+                    h3 { class: "pt-6 font-header text-xl font-medium text-secondary sm:text-2xl lg:text-3xl",
                         "I'm Pol, a C++ software engineer and software architect."
                     }
-                    p { class: "pt-6 font-body leading-relaxed text-grey-20",
+                    p { class: "pt-6 font-body leading-relaxed text-primary",
                         "I've been writting code since I was 9. I've always been "
                         "passionate about technology and how it can be used to "
                         "solve complex problems."
                     }
-                    p { class: "pt-6 font-body leading-relaxed text-grey-20",
+                    p { class: "pt-6 font-body leading-relaxed text-primary",
                         "I've worked on a wide range of projects; It all started "
                         "with videogame development when I was a kid, followed "
                         "by jumps through web fronted/backend development, and "

@@ -6,6 +6,8 @@ pub struct LetsConnectAddressProps {
     pub link: String,
     #[props(into)]
     pub icon: String,
+    #[props(into)]
+    pub description: String,
     // This value will be used to add a padding to the left of all except the first element. Don't set it manually.
     #[props(default)]
     pub is_first: bool,
@@ -17,10 +19,15 @@ pub struct LetsConnectAddressesProps {
 }
 
 impl LetsConnectAddressProps {
-    pub fn new(link: impl Into<String>, icon: impl Into<String>) -> Self {
+    pub fn new(
+        link: impl Into<String>,
+        icon: impl Into<String>,
+        description: impl Into<String>,
+    ) -> Self {
         Self {
             link: link.into(),
             icon: icon.into(),
+            description: description.into(),
             is_first: false,
         }
     }
@@ -30,10 +37,11 @@ impl Default for LetsConnectAddressesProps {
     fn default() -> Self {
         Self {
             addresses: Some(vec![
-                LetsConnectAddressProps::new("mailto:pol@marcet.biz", "bxl-gmail"),
+                LetsConnectAddressProps::new("mailto:pol@marcet.biz", "bxl-gmail", "Send Mail"),
                 LetsConnectAddressProps::new(
                     "https://www.linkedin.com/in/pol-marcet-sard%C3%A0-a40a5817a/",
                     "bxl-linkedin",
+                    "My LinkedIn",
                 ),
             ]),
         }
@@ -45,6 +53,7 @@ fn LetsConnectAddress(
     LetsConnectAddressProps {
         link,
         icon,
+        description,
         is_first,
     }: LetsConnectAddressProps,
 ) -> Element {
@@ -52,6 +61,7 @@ fn LetsConnectAddress(
         a {
             href: "{link}",
             target: "_blank",
+            aria_label: "{description}",
             class: if is_first { "" } else { "pl-4" },
             i { class: "bx {icon} text-2xl text-white hover:text-tertiary" }
         }
@@ -78,8 +88,8 @@ pub fn LetsConnectAddresses(
                 }
             }
             div { class: "flex items-center justify-center pt-5 sm:justify-start sm:pt-0",
-                for LetsConnectAddressProps { link , icon , .. } in addresses {
-                    LetsConnectAddress { link, icon, is_first: is_first_entry }
+                for LetsConnectAddressProps { link , icon , description , .. } in addresses {
+                    LetsConnectAddress { link, icon, description, is_first: is_first_entry }
                     {is_first_entry = false;}
                 }
             }
