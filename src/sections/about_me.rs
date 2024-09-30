@@ -8,7 +8,7 @@ pub fn AboutMe() -> Element {
     trace!("Creating about me");
 
     pub const ME_IMG: manganis::ImageAsset = manganis::mg!(image("./raw_assets/img/me.jpeg")
-        .size(192, 192)
+        .size(384, 384)
         .format(ImageType::Avif)
         .preload());
 
@@ -29,6 +29,8 @@ pub fn AboutMe() -> Element {
                     div { class: "rounded-full border-8 border-primary shadow-xl",
                         img {
                             src: "{ME_IMG}",
+                            loading: "lazy",
+                            decoding: "async",
                             alt: "Pol Marcet Sardà's photo",
                             class: "h-48 rounded-full sm:h-56"
                         }
