@@ -66,7 +66,8 @@ pub fn AboutMe() -> Element {
                         "by jumps through web fronted/backend development, and "
                         "ending on high performance and compiler programming. "
                         "Since I discovered this field, I knew I had discovered "
-                        "my field."
+                        "my passion, and long story short, I've been working on "
+                        "it since!"
                     }
                 }
                 SkillBars { skills }
