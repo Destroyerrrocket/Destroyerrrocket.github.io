@@ -7,19 +7,28 @@ pub enum ActiveSection {
     HelloWorld,
 }
 
+impl ActiveSection {
+    pub fn all_routes() -> Vec<Vec<String>> {
+        vec![
+            ActiveSection::AboutMe.into(),
+            ActiveSection::HelloWorld.into(),
+        ]
+    }
+}
+
 impl From<ActiveSection> for String {
     fn from(active_section: ActiveSection) -> String {
         let active_section: Vec<String> = active_section.into();
         active_section.join("/");
-        return "/".to_string() + active_section.join("/").as_str();
+        "/".to_string() + active_section.join("/").as_str()
     }
 }
 
 impl From<ActiveSection> for Vec<String> {
     fn from(active_section: ActiveSection) -> Vec<String> {
         match active_section {
-            ActiveSection::AboutMe => vec!["about_me".to_string()],
-            ActiveSection::HelloWorld => vec!["hello_world".to_string()],
+            ActiveSection::AboutMe => vec!["about_me.html".to_string()],
+            ActiveSection::HelloWorld => vec!["hello_world.html".to_string()],
         }
     }
 }
@@ -33,8 +42,8 @@ impl TryFrom<&[String]> for ActiveSection {
         }
 
         match str_vec.as_slice() {
-            ["about_me"] => Ok(Self::AboutMe),
-            ["hello_world"] => Ok(Self::HelloWorld),
+            ["about_me.html"] => Ok(Self::AboutMe),
+            ["hello_world.html"] => Ok(Self::HelloWorld),
 
             _ => Err(format!("Couldn't navigate to {:?}", values)),
         }

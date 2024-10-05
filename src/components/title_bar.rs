@@ -154,7 +154,7 @@ fn DesktopTitleButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
 #[component]
 fn DesktopTitleBar(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
     rsx! {
-        div { class: "z-70 bg-primary fixed w-full flex items-center justify-between",
+        nav { class: "z-70 bg-primary fixed w-full flex items-center justify-between",
             div { class: "hidden mt-1 mb-1 lg:block",
                 ul { class: "flex items-center",
                     {

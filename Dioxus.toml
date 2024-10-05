@@ -28,7 +28,7 @@ reload_html = true
 # which files or dirs will be watcher monitoring
 watch_path = ["index.html", "src", "assets"]
 
-index_on_404 = true
+index_on_404 = false
 
 # include `assets` in web platform
 [web.resource]
