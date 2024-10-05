@@ -104,7 +104,7 @@ pub fn AboutMe() -> Element {
                             div { class: "mt-1 flex",
                                 i { class: "bx bxs-right-arrow hidden text-primary md:block" }
                                 div { class: "md:-mt-1 md:pl-8",
-                                    span { class: "block font-body font-bold text-grey-40",
+                                    span { class: "block font-body font-bold text-grey-20",
                                         "07/2024 - Present"
                                     }
                                     span { class: "block pt-2 font-header text-xl font-bold uppercase text-primary",
@@ -143,7 +143,7 @@ pub fn AboutMe() -> Element {
                             div { class: "mt-1 flex",
                                 i { class: "bx bxs-right-arrow hidden text-primary md:block" }
                                 div { class: "md:-mt-1 md:pl-8",
-                                    span { class: "block font-body font-bold text-grey-40",
+                                    span { class: "block font-body font-bold text-grey-20",
                                         "06/2022 - 07/2024"
                                     }
                                     span { class: "block pt-2 font-header text-xl font-bold uppercase text-primary",
@@ -164,8 +164,10 @@ pub fn AboutMe() -> Element {
                         div { class: "flex justify-center md:justify-start",
                             span { class: "shrink-0",
                                 img {
-                                    alt: "company logo",
-                                    src: "/assets/img/logo-fedex.svg",
+                                    src: "/img/keysight_logo.svg",
+                                    alt: "Keysight Technologies logo",
+                                    loading: "lazy",
+                                    decoding: "async",
                                     class: "h-auto w-32"
                                 }
                             }
@@ -180,7 +182,7 @@ pub fn AboutMe() -> Element {
                             div { class: "mt-1 flex",
                                 i { class: "bx bxs-right-arrow hidden text-primary md:block" }
                                 div { class: "md:-mt-1 md:pl-8",
-                                    span { class: "block font-body font-bold text-grey-40",
+                                    span { class: "block font-body font-bold text-grey-20",
                                         "October 2019 - Feb 2021"
                                     }
                                     span { class: "block pt-2 font-header text-xl font-bold uppercase text-primary",
