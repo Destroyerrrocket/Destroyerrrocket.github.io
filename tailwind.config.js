@@ -13,8 +13,8 @@ module.exports = {
       transparent: "transparent",
       primary: "#222831",
       secondary: "#31363F",
-      tertiary: "#76ABAE",
-      quaternary: "#227B94",
+      tertiary: "#5E9B9F",
+      quaternary: "#1E6E84",
       "white-text": "#fdf5e6", // Old Lace
       white: "#ffffff",
       black: "#000000",

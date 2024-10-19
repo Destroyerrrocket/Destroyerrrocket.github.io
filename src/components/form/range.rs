@@ -35,11 +35,7 @@ pub fn Range(props: RangeProps) -> Element {
                 id: id.clone(),
                 value: "{value}"
             }
-            label {
-                r#for: id,
-                class: "py-2 mt-2 ml-2 text-primary dark:text-gray-200",
-                "{value}"
-            }
+            label { class: "py-2 mt-2 ml-2 text-primary dark:text-gray-200", "{value}" }
         }
     }
 }

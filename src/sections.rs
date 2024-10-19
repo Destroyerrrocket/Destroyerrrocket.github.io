@@ -1,11 +1,9 @@
 pub mod about_me;
-pub mod hello_world;
 pub mod password_generator;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq, enum_iterator::Sequence)]
 pub enum ActiveSection {
     AboutMe,
-    HelloWorld,
     PasswordGenerator,
 }
 
@@ -29,7 +27,6 @@ impl From<ActiveSection> for Vec<String> {
     fn from(active_section: ActiveSection) -> Vec<String> {
         match active_section {
             ActiveSection::AboutMe => vec!["about_me.html".to_string()],
-            ActiveSection::HelloWorld => vec!["hello_world.html".to_string()],
             ActiveSection::PasswordGenerator => vec!["password_generator.html".to_string()],
         }
     }
@@ -45,7 +42,6 @@ impl TryFrom<&[String]> for ActiveSection {
 
         match str_vec.as_slice() {
             ["about_me.html"] => Ok(Self::AboutMe),
-            ["hello_world.html"] => Ok(Self::HelloWorld),
             ["password_generator.html"] => Ok(Self::PasswordGenerator),
 
             _ => Err(format!("Couldn't navigate to {:?}", values)),

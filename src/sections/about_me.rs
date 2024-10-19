@@ -9,8 +9,7 @@ pub fn AboutMe() -> Element {
 
     pub const ME_IMG: manganis::ImageAsset = manganis::mg!(image("./raw_assets/img/me.jpeg")
         .size(384, 384)
-        .format(ImageType::Avif)
-        .preload());
+        .format(ImageType::Avif));
 
     let skills = vec![
         SkillBarProps::new("C++", 100),

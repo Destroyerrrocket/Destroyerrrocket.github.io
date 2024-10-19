@@ -139,8 +139,13 @@ pub fn PasswordGenerator() -> Element {
         }
         section { class: "max-w-4xl p-6 mx-auto bg-indigo-600 rounded-md shadow-none lg:shadow-md lg:mt-8",
             form {
+                label {
+                    r#for: "password-result",
+                    class: "text-primary dark:text-gray-200",
+                    "Password result"
+                }
                 div {
-                    ReadOnlyInputText { source: signal_password }
+                    ReadOnlyInputText { source: signal_password, placeholder: "password", id: "password-result" }
                 }
                 if dictionary != Dictionary::Custom {
                     div { class: "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1",
@@ -169,7 +174,11 @@ pub fn PasswordGenerator() -> Element {
                                 class: "text-primary dark:text-gray-200",
                                 "Custom Dictionary Characters"
                             }
-                            InputText { source: signal_custom_dictionary, id: "custom-dictionary" }
+                            InputText {
+                                source: signal_custom_dictionary,
+                                placeholder: "eg. abc123456",
+                                id: "custom-dictionary"
+                            }
                         }
                     }
                 }

@@ -66,9 +66,6 @@ fn MainSectionDisplayed(route: Vec<String>, current_section: sections::ActiveSec
         sections::ActiveSection::AboutMe => rsx! {
             main { sections::about_me::AboutMe {} }
         },
-        sections::ActiveSection::HelloWorld => rsx! {
-            main { sections::hello_world::HelloWorld {} }
-        },
         sections::ActiveSection::PasswordGenerator => rsx! {
             main { sections::password_generator::PasswordGenerator {} }
         },
@@ -104,11 +101,6 @@ fn NavBar(route: Vec<String>) -> Element {
         components::title_bar::TitleEntry::new(
             "About Me",
             sections::ActiveSection::AboutMe,
-            current_section,
-        ),
-        components::title_bar::TitleEntry::new(
-            "Hello World",
-            sections::ActiveSection::HelloWorld,
             current_section,
         ),
         components::title_bar::TitleEntry::new(
