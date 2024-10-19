@@ -18,7 +18,6 @@ pub fn AboutMe() -> Element {
         SkillBarProps::new("Python", 70),
         SkillBarProps::new("C#", 50),
         SkillBarProps::new("HTML/CSS", 100),
-        SkillBarProps::new("Javascript", 1),
     ];
 
     rsx! {
@@ -36,7 +35,7 @@ pub fn AboutMe() -> Element {
                         }
                     }
                     div { class: "pt-8 sm:pt-10 lg:pl-8 lg:pt-0",
-                        h1 { class: "text-center font-header text-4xl text-white sm:text-left sm:text-5xl md:text-6xl",
+                        h1 { class: "text-center font-header text-4xl text-white-text sm:text-left sm:text-5xl md:text-6xl",
                             "Hello, I'm Pol Marcet Sardà!"
                         }
                         LetsConnectAddresses {}

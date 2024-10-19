@@ -1,10 +1,9 @@
-use std::env;
-
 use dioxus::prelude::*;
 use dioxus_logger::tracing::{info, Level};
 
 mod components;
 mod sections;
+mod utils;
 
 #[cfg(debug_assertions)]
 fn config_logger() {
@@ -18,26 +17,9 @@ fn config_logger() {
     info!("starting app");
 }
 
-#[cfg(target_family = "wasm")]
-#[inline]
-fn is_wasm() -> bool {
-    true
-}
-
-#[cfg(target_family = "unix")]
-#[inline]
-fn is_wasm() -> bool {
-    false
-}
-
-#[cfg(target_family = "windows")]
-#[inline]
-fn is_wasm() -> bool {
-    false
-}
-
+#[cfg(not(target_family = "wasm"))]
 fn generate_all_route_files() {
-    let docs_dir = env::current_dir().unwrap().join("docs");
+    let docs_dir = std::env::current_dir().unwrap().join("docs");
     assert!(
         docs_dir.exists(),
         "docs directory not found. Please run `./build.sh`"
@@ -65,14 +47,17 @@ fn generate_all_route_files() {
     }
 }
 
+#[cfg(not(target_family = "wasm"))]
+fn main() {
+    config_logger();
+    generate_all_route_files();
+}
+
+#[cfg(target_family = "wasm")]
 fn main() {
     // Init logger
     config_logger();
-    if is_wasm() {
-        launch(App);
-    } else {
-        generate_all_route_files();
-    }
+    launch(App);
 }
 
 #[component]
@@ -83,6 +68,9 @@ fn MainSectionDisplayed(route: Vec<String>, current_section: sections::ActiveSec
         },
         sections::ActiveSection::HelloWorld => rsx! {
             main { sections::hello_world::HelloWorld {} }
+        },
+        sections::ActiveSection::PasswordGenerator => rsx! {
+            main { sections::password_generator::PasswordGenerator {} }
         },
     }
 }
@@ -121,6 +109,11 @@ fn NavBar(route: Vec<String>) -> Element {
         components::title_bar::TitleEntry::new(
             "Hello World",
             sections::ActiveSection::HelloWorld,
+            current_section,
+        ),
+        components::title_bar::TitleEntry::new(
+            "Password Generator",
+            sections::ActiveSection::PasswordGenerator,
             current_section,
         ),
     ];

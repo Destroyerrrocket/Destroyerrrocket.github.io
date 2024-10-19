@@ -1,2 +1,3 @@
 https://pol.marcet.biz/
 https://pol.marcet.biz/about_me.html
+https://pol.marcet.biz/password_generator.html

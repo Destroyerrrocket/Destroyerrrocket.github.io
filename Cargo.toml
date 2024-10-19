@@ -9,6 +9,11 @@ edition = "2021"
 [dependencies]
 
 dioxus = { version = ">=0.5", features = ["web", "router"] }
+web-sys = { version = "0.3.72", features = ["Navigator", "Clipboard"] }
+getrandom = { version = "^0.2", features = ["js"] }
+rand = { version= "^0.8.5", features = [] }
+enum-iterator = "2.1.0"
+rand-utf8 = "0.0.1"
 
 # Debug
 dioxus-logger = ">=0.5.1"

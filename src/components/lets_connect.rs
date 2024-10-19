@@ -63,7 +63,7 @@ fn LetsConnectAddress(
             target: "_blank",
             aria_label: "{description}",
             class: if is_first { "" } else { "pl-4" },
-            i { class: "bx {icon} text-2xl text-white hover:text-tertiary" }
+            i { class: "bx {icon} text-2xl text-white-text hover:text-tertiary" }
         }
     }
 }
@@ -80,7 +80,7 @@ pub fn LetsConnectAddresses(
     rsx! {
         div { class: "flex flex-col justify-center pt-3 sm:flex-row sm:pt-5 lg:justify-start",
             div { class: "flex items-center justify-center pl-0 sm:justify-start md:pl-1",
-                p { class: "font-body text-lg uppercase text-white leading-none",
+                p { class: "font-body text-lg uppercase text-white-text leading-none",
                     "Let's connect"
                 }
                 div { class: "hidden sm:block",
