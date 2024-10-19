@@ -6,15 +6,15 @@ module.exports = {
   theme: {
     fontFamily: {
       header: ["Raleway", "sans-serif"],
-      body: ["Open Sans", "sans-serif"],
+      body: ["Raleway", "sans-serif"],
     },
 
     colors: {
       transparent: "transparent",
       primary: "#222831",
       secondary: "#31363F",
-      tertiary: "#5E9B9F",
-      quaternary: "#1E6E84",
+      tertiary: "#48777A",
+      quaternary: "#175364",
       "white-text": "#fdf5e6", // Old Lace
       white: "#ffffff",
       black: "#000000",
