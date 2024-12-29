@@ -66,7 +66,27 @@ fn generate_blog_files(docs_dir: &std::path::Path, index_file: &std::path::PathB
                 let file_str = file.to_str().unwrap();
                 info!("file: {file_str}");
 
-                std::fs::copy(index_file, file).expect("failed to copy index.html to new route");
+                let static_version = std::env::current_dir()
+                    .unwrap()
+                    .join("static")
+                    .join("blog")
+                    .join(origin_path_year.file_name().unwrap())
+                    .join(origin_path_month.file_name().unwrap())
+                    .join(origin_path_day.file_name().unwrap())
+                    .join("index.html")
+                    .join("index.html");
+
+                if static_version.is_file() {
+                    info!(
+                        "found static version at: {}",
+                        static_version.to_str().unwrap()
+                    );
+                    std::fs::copy(static_version, file)
+                        .expect("failed to copy static version of page to new route");
+                } else {
+                    std::fs::copy(&index_file, file)
+                        .expect("failed to copy index.html to new route");
+                }
             }
         }
     }
@@ -161,10 +181,40 @@ fn main() {
 
 #[server(endpoint = "static_routes")]
 async fn static_routes() -> Result<Vec<String>, ServerFnError> {
-    Ok(ActiveSection::all_static_routes()
+    let mut extras = vec!["/".to_string()];
+
+    for entry in std::fs::read_dir("assets/blog").unwrap() {
+        let origin_path_year = entry.unwrap().path();
+        if !origin_path_year.is_dir() {
+            continue;
+        }
+
+        for entry in origin_path_year.read_dir().unwrap() {
+            let origin_path_month = entry.unwrap().path();
+            if !origin_path_month.is_dir() {
+                continue;
+            }
+
+            for entry in origin_path_month.read_dir().unwrap() {
+                let origin_path_day = entry.unwrap().path();
+                if !origin_path_day.is_dir() {
+                    continue;
+                }
+
+                extras.push(format!(
+                    "/blog/{}/{}/{}/index.html",
+                    origin_path_year.file_name().unwrap().to_str().unwrap(),
+                    origin_path_month.file_name().unwrap().to_str().unwrap(),
+                    origin_path_day.file_name().unwrap().to_str().unwrap()
+                ));
+            }
+        }
+    }
+
+    Ok(ActiveSection::all_routes()
         .into_iter()
         .map(|r| format!("/{}", r.join("/")))
-        .chain(vec!["/".to_string()].into_iter())
+        .chain(extras.into_iter())
         .collect())
 }
 
