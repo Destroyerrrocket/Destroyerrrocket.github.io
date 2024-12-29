@@ -1,5 +1,6 @@
 use dioxus::prelude::*;
-use dioxus_logger::tracing::*;
+use dioxus::{html::g::r, logger::tracing::*};
+use futures_util::io::Copy;
 use rand::Rng;
 
 use crate::components::form::input_text::InputText;
@@ -95,6 +96,24 @@ fn get_password(
 }
 
 #[component]
+pub fn CopyButton(text: ReadOnlySignal<String>) -> Element {
+    rsx! {
+        div {
+            button {
+                r#type: "button",
+                onclick: move |event| async move {
+                    event.prevent_default();
+                    info!("Copying to clipboard: {}", text());
+                    crate::utils::clipboard::set_clipboard(text()).await;
+                },
+                class: "px-6 py-2 w-full leading-5 text-white-text transition-colors duration-200 transform bg-tertiary rounded-md hover:bg-quaternary focus:outline-none focus:bg-gray-600",
+                "Copy"
+            }
+        }
+    }
+}
+
+#[component]
 pub fn PasswordGenerator() -> Element {
     info!("Creating Password Generator");
 
@@ -105,23 +124,27 @@ pub fn PasswordGenerator() -> Element {
     let signal_dictionary = use_signal(|| Into::<String>::into(DEFAULT_DICTIONARY));
     let signal_custom_dictionary = use_signal(|| "".to_string());
     let signal_number_of_characters = use_signal(|| DEFAULT_SIZE);
-    let mut signal_password = use_signal(|| "".to_string());
+    let mut signal_reset_password = use_signal(|| false);
 
     let dictionary = Dictionary::from(signal_dictionary.read().as_str());
     info!("Dictionary: {:?}", dictionary);
 
-    signal_password.set(get_password(
-        dictionary,
-        signal_custom_dictionary.read().as_str(),
-        *signal_number_of_characters.read(),
-    ));
+    let password = use_resource(move || async move {
+        signal_reset_password();
+
+        get_password(
+            Dictionary::from(signal_dictionary().as_str()),
+            signal_custom_dictionary().as_str(),
+            signal_number_of_characters(),
+        )
+    });
 
     let selectDictionaryPassword = rsx! {
         Select {
             source: signal_dictionary,
             default: Into::<String>::into(DEFAULT_DICTIONARY),
             values: enum_iterator::all::<Dictionary>().map(|x| x.into()).collect(),
-            id: "select-dictionary"
+            id: "select-dictionary",
         }
     };
     rsx! {
@@ -145,7 +168,11 @@ pub fn PasswordGenerator() -> Element {
                     "Password result"
                 }
                 div {
-                    ReadOnlyInputText { source: signal_password, placeholder: "password", id: "password-result" }
+                    ReadOnlyInputText {
+                        source: "{password().unwrap_or_default()}",
+                        placeholder: "password",
+                        id: "password-result",
+                    }
                 }
                 if dictionary != Dictionary::Custom {
                     div { class: "grid grid-cols-1 gap-6 mt-4 sm:grid-cols-1",
@@ -177,7 +204,7 @@ pub fn PasswordGenerator() -> Element {
                             InputText {
                                 source: signal_custom_dictionary,
                                 placeholder: "eg. abc123456",
-                                id: "custom-dictionary"
+                                id: "custom-dictionary",
                             }
                         }
                     }
@@ -193,8 +220,9 @@ pub fn PasswordGenerator() -> Element {
                             source: signal_number_of_characters,
                             min: 1,
                             max: MAX_SIZE,
+                            initial_value: DEFAULT_SIZE,
                             step: 1,
-                            id: "range-password"
+                            id: "range-password",
                         }
                     }
                 }
@@ -202,38 +230,17 @@ pub fn PasswordGenerator() -> Element {
                     div {
                         button {
                             r#type: "button",
-                            onclick: move |_| {
-                                signal_password
-                                    .set(
-                                        get_password(
-                                            dictionary,
-                                            signal_custom_dictionary.read().as_str(),
-                                            *signal_number_of_characters.read(),
-                                        ),
-                                    );
+                            onclick: move |event| {
+                                event.prevent_default();
+                                signal_reset_password.toggle();
                             },
-                            prevent_default: true,
                             class: "px-6 py-2 w-full leading-5 text-white-text transition-colors duration-200 transform bg-tertiary rounded-md hover:bg-quaternary focus:outline-none focus:bg-gray-600",
                             "Regenerate"
                         }
                     }
-                    div {
-                        button {
-                            r#type: "button",
-                            onclick: move |_| {
-                                let password = signal_password.read();
-                                crate::utils::clipboard::set_clipboard(password.as_str());
-                            },
-                            prevent_default: true,
-                            class: "px-6 py-2 w-full leading-5 text-white-text transition-colors duration-200 transform bg-tertiary rounded-md hover:bg-quaternary focus:outline-none focus:bg-gray-600",
-                            "Copy"
-                        }
-                    }
+                    CopyButton { text: password().unwrap_or_default() }
                 }
             }
         }
     }
 }
-
-/*
-*/

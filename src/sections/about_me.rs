@@ -1,15 +1,21 @@
 use crate::components::lets_connect::LetsConnectAddresses;
 use crate::components::skill_bars::{SkillBarProps, SkillBars};
+use dioxus::logger::tracing::*;
 use dioxus::prelude::*;
-use dioxus_logger::tracing::*;
 
 #[component]
 pub fn AboutMe() -> Element {
     info!("Creating about me");
 
-    pub const ME_IMG: manganis::ImageAsset = manganis::mg!(image("./raw_assets/img/me.jpeg")
-        .size(384, 384)
-        .format(ImageType::Avif));
+    pub const ME_IMG: Asset = asset!(
+        "./raw_assets/img/me.jpeg",
+        ImageAssetOptions::new()
+            .with_size(ImageSize::Manual {
+                width: 384,
+                height: 384
+            })
+            .with_avif()
+    );
 
     let skills = vec![
         SkillBarProps::new("C++", 100),
@@ -30,7 +36,7 @@ pub fn AboutMe() -> Element {
                             loading: "lazy",
                             decoding: "async",
                             alt: "Pol Marcet Sardà's photo",
-                            class: "h-48 rounded-full sm:h-56"
+                            class: "h-48 rounded-full sm:h-56",
                         }
                     }
                     div { class: "pt-8 sm:pt-10 lg:pl-8 lg:pt-0",
@@ -84,11 +90,11 @@ pub fn AboutMe() -> Element {
                         div { class: "flex justify-center md:justify-start",
                             span { class: "shrink-0",
                                 img {
-                                    src: "/img/keysight_logo.svg",
+                                    src: "assets/img/keysight_logo.svg",
                                     alt: "Keysight Technologies logo",
                                     loading: "lazy",
                                     decoding: "async",
-                                    class: "h-auto w-32"
+                                    class: "h-auto w-32",
                                 }
                             }
                             div { class: "relative ml-3 hidden w-full md:block",
@@ -123,11 +129,11 @@ pub fn AboutMe() -> Element {
                         div { class: "flex justify-center md:justify-start",
                             span { class: "shrink-0",
                                 img {
-                                    src: "/img/keysight_logo.svg",
+                                    src: "assets/img/keysight_logo.svg",
                                     alt: "Keysight Technologies logo",
                                     loading: "lazy",
                                     decoding: "async",
-                                    class: "h-auto w-32"
+                                    class: "h-auto w-32",
                                 }
                             }
                             div { class: "relative ml-3 hidden w-full md:block",
@@ -162,11 +168,11 @@ pub fn AboutMe() -> Element {
                         div { class: "flex justify-center md:justify-start",
                             span { class: "shrink-0",
                                 img {
-                                    src: "/img/keysight_logo.svg",
+                                    src: "assets/img/keysight_logo.svg",
                                     alt: "Keysight Technologies logo",
                                     loading: "lazy",
                                     decoding: "async",
-                                    class: "h-auto w-32"
+                                    class: "h-auto w-32",
                                 }
                             }
                             div { class: "relative ml-3 hidden w-full md:block",

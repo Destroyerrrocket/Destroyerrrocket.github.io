@@ -1,2 +1,3 @@
 #!/bin/sh
-dx build && cargo run && dx serve
+# dx build --platform web && cargo run -F "generate_htmls" ./target/dx/personal-webpage/debug/web/public &&
+dx serve --platform web

@@ -2,7 +2,7 @@ use dioxus::prelude::*;
 
 #[derive(Debug, Clone, PartialEq, Props)]
 pub struct ReadOnlyInputTextProps {
-    pub source: Signal<String>,
+    pub source: ReadOnlySignal<String>,
     #[props(into, default)]
     pub placeholder: String,
     #[props(into, default)]
@@ -16,7 +16,6 @@ pub fn ReadOnlyInputText(props: ReadOnlyInputTextProps) -> Element {
         placeholder,
         id,
     } = props;
-    let value = source.read();
 
     rsx! {
         input {
@@ -25,7 +24,7 @@ pub fn ReadOnlyInputText(props: ReadOnlyInputTextProps) -> Element {
             readonly: true,
             id,
             placeholder: "{placeholder}",
-            value: "{value}"
+            value: "{source}",
         }
     }
 }

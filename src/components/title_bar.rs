@@ -66,6 +66,13 @@ fn ShowMobileBurgerMenu() -> Element {
     }
 }
 
+fn change_section(section: sections::ActiveSection) {
+    let nav = navigator();
+    nav.push(Route::NavBar {
+        route: section.into(),
+    });
+}
+
 #[component]
 fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
     let mut mobile_burger_menu_shown: Signal<MobileBurgerMenuShown> =
@@ -80,12 +87,9 @@ fn MobileBurgerButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
             a {
                 class: "pt-0.5 font-header font-semibold uppercase text-white-text",
                 href: output_url,
-                prevent_default: "onclick",
-                onclick: move |_event| {
-                    let nav = navigator();
-                    nav.push(Route::NavBar {
-                        route: section.into(),
-                    });
+                onclick: move |event| {
+                    event.prevent_default();
+                    change_section(section);
                     *mobile_burger_menu_shown.write() = MobileBurgerMenuShown(false);
                 },
                 "{name}"
@@ -109,10 +113,15 @@ fn MobileBurgerMenu(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
             div { class: "absolute right-0 min-h-screen w-2/3 bg-primary py-4 px-8 shadow md:w-1/3",
                 ul { class: "mt-8 flex flex-col",
                     {
-                    entries.read().iter().map(|entry| {
-                        let entryClone = entry.clone();
-                        rsx! {MobileBurgerButton { entry: entryClone }}
-                    })
+                        entries
+                            .read()
+                            .iter()
+                            .map(|entry| {
+                                let entryClone = entry.clone();
+                                rsx! {
+                                    MobileBurgerButton { entry: entryClone }
+                                }
+                            })
                     }
                 }
             }
@@ -137,12 +146,9 @@ fn DesktopTitleButton(entry: ReadOnlySignal<TitleEntry>) -> Element {
             a {
                 class: "cursor-pointer pt-0.5 font-header font-semibold uppercase text-white-text",
                 href: output_url,
-                prevent_default: "onclick",
-                onclick: move |_event| {
-                    let nav = navigator();
-                    nav.push(Route::NavBar {
-                        route: section.into(),
-                    });
+                onclick: move |event| {
+                    event.prevent_default();
+                    change_section(section);
                 },
                 "{name}"
             }
@@ -158,10 +164,15 @@ fn DesktopTitleBar(entries: ReadOnlySignal<Vec<TitleEntry>>) -> Element {
             div { class: "hidden mt-1 mb-1 lg:block",
                 ul { class: "flex items-center",
                     {
-                        entries.read().iter().map(|entry| {
-                            let entryClone = entry.clone();
-                            rsx! {DesktopTitleButton { entry: entryClone }}
-                        })
+                        entries
+                            .read()
+                            .iter()
+                            .map(|entry| {
+                                let entryClone = entry.clone();
+                                rsx! {
+                                    DesktopTitleButton { entry: entryClone }
+                                }
+                            })
                     }
                 }
             }
