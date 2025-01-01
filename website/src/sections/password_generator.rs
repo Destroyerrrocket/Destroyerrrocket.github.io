@@ -1,6 +1,5 @@
+use dioxus::logger::tracing::*;
 use dioxus::prelude::*;
-use dioxus::{html::g::r, logger::tracing::*};
-use futures_util::io::Copy;
 use rand::Rng;
 
 use crate::components::form::input_text::InputText;
@@ -96,15 +95,16 @@ fn get_password(
 }
 
 #[component]
-pub fn CopyButton(text: ReadOnlySignal<String>) -> Element {
+pub fn CopyButton(text: Resource<String>) -> Element {
     rsx! {
         div {
             button {
                 r#type: "button",
                 onclick: move |event| async move {
                     event.prevent_default();
-                    info!("Copying to clipboard: {}", text());
-                    crate::utils::clipboard::set_clipboard(text()).await;
+                    let password = text().unwrap_or_default();
+                    info!("Copying to clipboard: {}", password);
+                    crate::utils::clipboard::set_clipboard(password).await;
                 },
                 class: "px-6 py-2 w-full leading-5 text-white-text transition-colors duration-200 transform bg-tertiary rounded-md hover:bg-quaternary focus:outline-none focus:bg-gray-600",
                 "Copy"
@@ -238,7 +238,7 @@ pub fn PasswordGenerator() -> Element {
                             "Regenerate"
                         }
                     }
-                    CopyButton { text: password().unwrap_or_default() }
+                    CopyButton { text: password }
                 }
             }
         }

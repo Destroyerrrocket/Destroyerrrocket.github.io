@@ -1,0 +1,45 @@
+[package]
+name = "website"
+version = "0.1.0"
+authors = ["Pol Marcet Sardà <polmarcetsarda@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+dioxus = { version = "0.6.1", features = ["router", "fullstack"] }
+dioxus-web = { version = "0.6.1", optional = true }
+
+web-sys = { version = "0.3.72", optional = true, features = [
+    "Navigator",
+    "Clipboard",
+    "HtmlCanvasElement",
+] }
+getrandom = { version = "^0.2", features = ["js"] }
+rand = { version = "^0.8.5", features = [] }
+enum-iterator = "2.1.0"
+rand-utf8 = "0.0.1"
+manganis = ">=0.6.1"
+wgpu = { version = "^23.0.0", optional = true, features = ["webgpu", "wgsl"] }
+futures-util = "^0.3.0"
+gloo-timers = { version = "0.3.0", features = ["futures"] }
+oneshot = "0.1.8"
+wasm-bindgen-futures = { version = "0.4.49", optional = true }
+wasm-bindgen = { version = "0.2.99", optional = true }
+
+[features]
+default = []
+server = ["dioxus/server"]
+web = [
+    "dioxus/web",
+    "dep:dioxus-web",
+    "dep:web-sys",
+    "dep:wgpu",
+    "dep:wasm-bindgen-futures",
+    "dep:wasm-bindgen",
+]
+generate_htmls = []
+
+[build-dependencies]
+serde = ">=1.0"
+serde_json = ">=1.0"

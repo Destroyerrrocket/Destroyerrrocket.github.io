@@ -17,9 +17,9 @@
       crossorigin
     />
     <link rel="icon" type="image/x-icon" href="/assets/favicon.ico" />
-  <link rel="preload" href="/./wasm/personal-webpage_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
-            <link rel="preload" href="/./wasm/personal-webpage.js" as="script">
-            <link rel="stylesheet" href="/assets/tailwind-5c2c969f3b2ad46a.css" type="text/css"/><link rel="stylesheet" href="/assets/hamburgers-min-50dd6c4e1b7541c1.css" type="text/css"/></head>
+  <link rel="preload" href="/./wasm/website_bg.wasm" as="fetch" type="application/wasm" crossorigin="">
+            <link rel="preload" href="/./wasm/website.js" as="script">
+            <link rel="stylesheet" href="/assets/tailwind-963ccc9cc7ae76eb.css" type="text/css"/><link rel="stylesheet" href="/assets/hamburgers-min-50dd6c4e1b7541c1.css" type="text/css"/></head>
 
   <body>
     <div id="main"><script>window.hydrate_queue=[];window.dx_hydrate=(id,data)=>{const decoded=atob(data),bytes=Uint8Array.from(decoded,(c)=>c.charCodeAt(0));if(window.hydration_callback)window.hydration_callback(id,bytes);else window.hydrate_queue.push([id,bytes])};
@@ -42,9 +42,9 @@
     /></noscript>
   <script>
             // We can't use a module script here because we need to start the script immediately when streaming
-            import("/./wasm/personal-webpage.js").then(
+            import("/./wasm/website.js").then(
                 ({ default: init }) => {
-                init("/./wasm/personal-webpage_bg.wasm").then((wasm) => {
+                init("/./wasm/website_bg.wasm").then((wasm) => {
                     if (wasm.__wbindgen_start == undefined) {
                     wasm.main();
                     }

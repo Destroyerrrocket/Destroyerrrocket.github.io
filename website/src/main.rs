@@ -22,7 +22,7 @@ fn config_logger() {
 #[cfg(feature = "generate_htmls")]
 fn generate_blog_files(docs_dir: &std::path::Path, index_file: &std::path::PathBuf) {
     let blog_dir = docs_dir.join("blog");
-    for entry in std::fs::read_dir("assets/blog").unwrap() {
+    for entry in std::fs::read_dir("website/assets/blog").unwrap() {
         let origin_path_year = entry.unwrap().path();
         if !origin_path_year.is_dir() {
             continue;
@@ -182,8 +182,7 @@ fn main() {
 #[server(endpoint = "static_routes")]
 async fn static_routes() -> Result<Vec<String>, ServerFnError> {
     let mut extras = vec!["/".to_string()];
-
-    for entry in std::fs::read_dir("assets/blog").unwrap() {
+    for entry in std::fs::read_dir("website/assets/blog").unwrap() {
         let origin_path_year = entry.unwrap().path();
         if !origin_path_year.is_dir() {
             continue;
