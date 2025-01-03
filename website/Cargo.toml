@@ -12,14 +12,12 @@ dioxus-web = { version = "0.6.1", optional = true }
 web-sys = { version = "0.3.72", optional = true, features = [
     "Navigator",
     "Clipboard",
-    "WorkerGlobalScope",
 ] }
 getrandom = { version = "^0.2", features = ["js"] }
 rand = { version = "^0.8.5", features = [] }
 enum-iterator = "2.1.0"
 rand-utf8 = "0.0.1"
 manganis = ">=0.6.1"
-futures-util = "^0.3.0"
 wasm-bindgen-futures = { version = "0.4.49", optional = true }
 wasm-bindgen = { version = "0.2.99", optional = true }
 

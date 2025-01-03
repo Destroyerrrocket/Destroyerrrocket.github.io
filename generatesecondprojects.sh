@@ -1,5 +1,3 @@
 #!/bin/bash
 
-pushd triangle-demo
-wasm-pack build --target web --release --out-dir ../website/assets/wasm/triangle-demo
-popd
+wasm-pack build --target web --release --no-pack --no-typescript --out-dir ../website/assets/wasm/triangle-demo triangle-demo

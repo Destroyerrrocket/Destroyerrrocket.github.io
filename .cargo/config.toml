@@ -1,10 +1,10 @@
-#[build]
-#rustflags = [
-#	"-Clto",
-#	"-Zvirtual-function-elimination",
-#	"-Zlocation-detail=none",
-#	"-Zfmt-debug=none",
-#]
+[build]
+rustflags = [
+	#	"-Clto",
+	#	"-Zvirtual-function-elimination",
+	#"-Zlocation-detail=none",
+	#"-Zfmt-debug=none",
+]
 
 #[unstable]
 #build-std = ["std", "panic_abort", "core", "alloc"]
