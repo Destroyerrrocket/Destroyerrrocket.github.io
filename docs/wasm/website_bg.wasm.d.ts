@@ -1,7 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export const hello_world: () => void;
 export const main: (a: number, b: number) => number;
 export const __wbg_jsowner_free: (a: number, b: number) => void;
 export const __wbg_intounderlyingbytesource_free: (a: number, b: number) => void;
@@ -23,8 +22,8 @@ export const __wbindgen_export_2: (a: number) => void;
 export const __wbindgen_export_3: (a: number, b: number, c: number) => void;
 export const __wbindgen_export_4: WebAssembly.Table;
 export const __wbindgen_add_to_stack_pointer: (a: number) => number;
-export const __wbindgen_export_5: (a: number, b: number) => void;
-export const __wbindgen_export_6: (a: number, b: number, c: number) => void;
+export const __wbindgen_export_5: (a: number, b: number, c: number) => void;
+export const __wbindgen_export_6: (a: number, b: number) => void;
 export const __wbindgen_export_7: (a: number, b: number, c: number, d: number, e: number) => void;
 export const __wbindgen_export_8: (a: number, b: number, c: number) => void;
 export const __wbindgen_export_9: (a: number, b: number, c: number, d: number) => void;

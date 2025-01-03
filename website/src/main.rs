@@ -157,7 +157,10 @@ fn generate_all_route_files() {
     }
 }
 
-#[cfg(feature = "generate_htmls")]
+#[cfg(all(
+    feature = "generate_htmls",
+    not(any(feature = "server", feature = "web"))
+))]
 fn main() {
     config_logger();
     generate_all_route_files();

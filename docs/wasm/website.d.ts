@@ -1,6 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-export function hello_world(): void;
 export class IntoUnderlyingByteSource {
   private constructor();
   free(): void;
@@ -32,7 +31,6 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
   readonly memory: WebAssembly.Memory;
-  readonly hello_world: () => void;
   readonly main: (a: number, b: number) => number;
   readonly __wbg_jsowner_free: (a: number, b: number) => void;
   readonly __wbg_intounderlyingbytesource_free: (a: number, b: number) => void;
@@ -54,8 +52,8 @@ export interface InitOutput {
   readonly __wbindgen_export_3: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export_4: WebAssembly.Table;
   readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
-  readonly __wbindgen_export_5: (a: number, b: number) => void;
-  readonly __wbindgen_export_6: (a: number, b: number, c: number) => void;
+  readonly __wbindgen_export_5: (a: number, b: number, c: number) => void;
+  readonly __wbindgen_export_6: (a: number, b: number) => void;
   readonly __wbindgen_export_7: (a: number, b: number, c: number, d: number, e: number) => void;
   readonly __wbindgen_export_8: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export_9: (a: number, b: number, c: number, d: number) => void;

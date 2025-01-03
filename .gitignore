@@ -21,3 +21,6 @@ assets/tailwind.css
 **/*.rs.bk
 
 **/*.br
+
+# These are generated wasm files we don't want to track
+website/assets/wasm/

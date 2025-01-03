@@ -1,0 +1,17 @@
+[package]
+name = "triangle-demo"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+web-sys = { version = "0.3.72", features = ["console", "HtmlCanvasElement"] }
+wgpu = { version = "^23.0.0", features = ["webgpu", "wgsl"] }
+wasm-bindgen-futures = { version = "0.4.49" }
+wasm-bindgen = { version = "0.2.99" }
+futures-util = "^0.3.0"
+gloo-timers = { version = "0.3.0", features = ["futures"] }
+oneshot = "0.1.8"
+log = "0.4.22"
