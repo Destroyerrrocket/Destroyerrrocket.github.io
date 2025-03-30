@@ -7,11 +7,15 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dioxus = { version = "0.6.3", features = ["router", "fullstack"] }
-dioxus-web = { version = "0.6.3", optional = true }
+dioxus = { version = "0.6.3", features = ["router", "web"] }
+dioxus-web = { version = "0.6.3", optional = true, features = [] }
 web-sys = { version = "0.3.72", optional = true, features = [
     "Navigator",
     "Clipboard",
+    "Request",
+    "RequestInit",
+    "RequestMode",
+    "Response",
 ] }
 getrandom = { version = "^0.2", features = ["js"] }
 rand = { version = "^0.8.5", features = [] }
@@ -23,7 +27,6 @@ wasm-bindgen = { version = "0.2.99", optional = true }
 
 [features]
 default = []
-server = ["dioxus/server"]
 web = [
     "dioxus/web",
     "dep:dioxus-web",

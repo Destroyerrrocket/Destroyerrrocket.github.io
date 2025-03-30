@@ -163,7 +163,7 @@ fn main() {
     */
     launch(App);
 }
-
+/*
 #[server(endpoint = "static_routes")]
 async fn static_routes() -> Result<Vec<String>, ServerFnError> {
     let mut extras = vec!["/".to_string()];
@@ -201,7 +201,7 @@ async fn static_routes() -> Result<Vec<String>, ServerFnError> {
         .chain(extras.into_iter())
         .collect())
 }
-
+ */
 #[component]
 fn MainSectionDisplayed(route: Vec<String>, current_section: sections::ActiveSection) -> Element {
     match current_section {

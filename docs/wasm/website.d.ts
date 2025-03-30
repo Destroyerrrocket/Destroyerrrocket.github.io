@@ -1,27 +1,5 @@
 /* tslint:disable */
 /* eslint-disable */
-export class IntoUnderlyingByteSource {
-  private constructor();
-  free(): void;
-  start(controller: ReadableByteStreamController): void;
-  pull(controller: ReadableByteStreamController): Promise<any>;
-  cancel(): void;
-  readonly type: string;
-  readonly autoAllocateChunkSize: number;
-}
-export class IntoUnderlyingSink {
-  private constructor();
-  free(): void;
-  write(chunk: any): Promise<any>;
-  close(): Promise<any>;
-  abort(reason: any): Promise<any>;
-}
-export class IntoUnderlyingSource {
-  private constructor();
-  free(): void;
-  pull(controller: ReadableStreamDefaultController): Promise<any>;
-  cancel(): void;
-}
 export class JSOwner {
   private constructor();
   free(): void;
@@ -33,30 +11,14 @@ export interface InitOutput {
   readonly memory: WebAssembly.Memory;
   readonly main: (a: number, b: number) => number;
   readonly __wbg_jsowner_free: (a: number, b: number) => void;
-  readonly __wbg_intounderlyingbytesource_free: (a: number, b: number) => void;
-  readonly intounderlyingbytesource_type: (a: number, b: number) => void;
-  readonly intounderlyingbytesource_autoAllocateChunkSize: (a: number) => number;
-  readonly intounderlyingbytesource_start: (a: number, b: number) => void;
-  readonly intounderlyingbytesource_pull: (a: number, b: number) => number;
-  readonly intounderlyingbytesource_cancel: (a: number) => void;
-  readonly __wbg_intounderlyingsource_free: (a: number, b: number) => void;
-  readonly intounderlyingsource_pull: (a: number, b: number) => number;
-  readonly intounderlyingsource_cancel: (a: number) => void;
-  readonly __wbg_intounderlyingsink_free: (a: number, b: number) => void;
-  readonly intounderlyingsink_write: (a: number, b: number) => number;
-  readonly intounderlyingsink_close: (a: number) => number;
-  readonly intounderlyingsink_abort: (a: number, b: number) => number;
   readonly __wbindgen_export_0: (a: number, b: number) => number;
   readonly __wbindgen_export_1: (a: number, b: number, c: number, d: number) => number;
   readonly __wbindgen_export_2: (a: number) => void;
   readonly __wbindgen_export_3: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export_4: WebAssembly.Table;
-  readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
   readonly __wbindgen_export_5: (a: number, b: number, c: number) => void;
   readonly __wbindgen_export_6: (a: number, b: number) => void;
-  readonly __wbindgen_export_7: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number, i: number) => void;
-  readonly __wbindgen_export_8: (a: number, b: number, c: number) => void;
-  readonly __wbindgen_export_9: (a: number, b: number, c: number, d: number) => void;
+  readonly __wbindgen_export_7: (a: number, b: number, c: number) => void;
   readonly __wbindgen_start: () => void;
 }
 
