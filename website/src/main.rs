@@ -150,6 +150,7 @@ fn main() {
 fn main() {
     // Init logger
     config_logger();
+    /*
     dioxus::LaunchBuilder::new()
         .with_cfg(server_only! {
             ServeConfig::builder()
@@ -159,6 +160,7 @@ fn main() {
                 .unwrap()
         })
         .launch(App);
+    */
     launch(App);
 }
 
