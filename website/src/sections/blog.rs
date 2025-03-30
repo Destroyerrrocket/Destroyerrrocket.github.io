@@ -51,6 +51,62 @@ async fn run(extern_module: String, id: String) -> dioxus::Result<JsValue> {
 }
 
 #[component]
+fn BlogMarkdown(blog_date: sections::BlogDate) -> Element {
+    #[cfg(feature = "web")]
+    let markdown: Resource<Result<String, JsValue>> = use_resource(move || async move {
+        let opts = web_sys::RequestInit::new();
+
+        opts.set_method("GET");
+        opts.set_mode(web_sys::RequestMode::SameOrigin);
+
+        let html = entries::get_blog(blog_date).html;
+        let url = html.to_string();
+
+        let request = web_sys::Request::new_with_str_and_init(&url, &opts)?;
+        let window = web_sys::window().unwrap();
+        let resp_value =
+            wasm_bindgen_futures::JsFuture::from(window.fetch_with_request(&request)).await?;
+        // `resp_value` is a `Response` object.
+        assert!(resp_value.is_instance_of::<web_sys::Response>());
+        let resp: web_sys::Response = resp_value.dyn_into().unwrap();
+
+        // Convert this other `Promise` into a rust `Future`.
+        let text = wasm_bindgen_futures::JsFuture::from(resp.text()?).await?;
+
+        // Send the JSON response back to JS.
+        Ok(text.as_string().unwrap())
+    });
+
+    #[cfg(not(feature = "web"))]
+    let markdown: Resource<Result<String, String>> = use_resource(move || async move {
+        info!("Returning an empty blog");
+        Ok("".to_string())
+    });
+
+    match &*markdown.read_unchecked() {
+        Some(Ok(response)) => rsx! {
+            div { class: "container min-w-full px-0 mx-0 py-10",
+                div { class: "w-full py-10 px-10 md:mx-auto md:py-12 md:px-12 md:max-w-4xl md:rounded-lg bg-secondary",
+                    div { class: "w-full *:xl:gap-8",
+                        div {
+                            class: "prose prose-invert max-w-full",
+                            dangerous_inner_html: "{response}",
+                        }
+                    }
+                }
+            
+            }
+        },
+        Some(Err(_)) => rsx! {
+            div { "Loading blog failed" }
+        },
+        None => rsx! {
+            div { "Loading blog..." }
+        },
+    }
+}
+
+#[component]
 fn BlogEntry(blog_date: sections::BlogDate) -> Element {
     let blog_entry = entries::get_blog(blog_date);
 
@@ -105,6 +161,7 @@ fn BlogEntry(blog_date: sections::BlogDate) -> Element {
                     height: 1000,
                 }
             }
+            BlogMarkdown { blog_date }
         }
     }
 }

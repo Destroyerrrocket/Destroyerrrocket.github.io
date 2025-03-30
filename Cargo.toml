@@ -1,5 +1,5 @@
 [workspace]
-members = [ "triangle-demo","website"]
+members = ["triangle-demo", "website"]
 resolver = "2"
 
 [profile.release]

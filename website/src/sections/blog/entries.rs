@@ -9,6 +9,7 @@ pub struct BlogEntry {
     pub description: &'static str,
     pub image_file_thumbnail: Asset,
     pub image_file_blog: Asset,
+    pub html: Asset,
 }
 
 include!(concat!(env!("OUT_DIR"), "/current_blogs.rs"));

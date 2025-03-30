@@ -24,3 +24,6 @@ assets/tailwind.css
 
 # These are generated wasm files we don't want to track
 website/assets/wasm/
+
+# These are generated html blog files we don't want to track
+website/assets/blogs/

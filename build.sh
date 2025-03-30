@@ -1,6 +1,6 @@
 #!/bin/sh
 ./generatesecondprojects.sh
-rm -fr docs && rm -fr ./target/dx/website/release/web/public && dx bundle --platform web --release --ssg -p website && cargo run -p website -F "generate_htmls" ./target/dx/website/release/web/public
+rm -fr docs && rm -fr ./target/dx/website/release/web/public && dx bundle --platform web --release -p website && cargo run -p website -F "generate_htmls" ./target/dx/website/release/web/public
 mv ./target/dx/website/release/web/public/wasm/website_bg.wasm ./target/dx/website/release/web/public/wasm/website_bg.bak.wasm
 wasm-opt -Oz --strip-dwarf -o ./target/dx/website/release/web/public/wasm/website_bg.wasm ./target/dx/website/release/web/public/wasm/website_bg.bak.wasm
 rm ./target/dx/website/release/web/public/wasm/website_bg.bak.wasm
